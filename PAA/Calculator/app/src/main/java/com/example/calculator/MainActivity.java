@@ -1,11 +1,15 @@
 package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private TextView output;
@@ -103,5 +107,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void doSwitch(View v) {
+        Intent intent = new Intent(getApplicationContext(), BMICounter.class);
+        startActivity(intent);
     }
 }
