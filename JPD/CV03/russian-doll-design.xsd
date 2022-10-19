@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="knihovna">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="kniha" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="autor" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="hlavni" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="nazev" type="xs:string"/>
+                            <xs:element name="vydavatel" type="xs:string" minOccurs="0"/>
+                            <xs:element name="rok" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                        <xs:attribute name="isbn" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
