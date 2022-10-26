@@ -5,15 +5,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    private ConstraintLayout window = null;
-    private ImageButton icon = null;
-    private TextView textView = null;
+    public ConstraintLayout window = null;
+    public ImageButton icon = null;
+    public TextView textView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.window = findViewById(R.id.main_window);
         this.icon = findViewById(R.id.imageButton);
+        this.icon.setOnTouchListener(new MyTouchListener(this));
         this.textView = findViewById(R.id.output);
     }
 
