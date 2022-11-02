@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="rozmerType">
+        <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="caraType">
+        <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="pruhlednostType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]%|[0-9][0-9]%|100%"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="systemType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="bw|rgb"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="barvaType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="system" type="systemType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="bodType">
+        <xs:sequence>
+            <xs:element name="x" type="rozmerType"/>
+            <xs:element name="y" type="rozmerType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="kotvaType">
+        <xs:sequence>
+            <xs:element name="bod" type="bodType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:group name="skipna">
+        <xs:sequence>
+            <xs:element name="barva" type="barvaType"/>
+            <xs:element name="cara" type="caraType"/>
+            <xs:element name="kotva" type="kotvaType"/>
+            <xs:element name="pruhlednost" type="pruhlednostType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="obdelnikType">
+        <xs:sequence>
+            <xs:group ref="skipna"/>
+            <xs:element name="sirka" type="rozmerType"/>
+            <xs:element name="vyska" type="rozmerType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="kruhType">
+        <xs:sequence>
+            <xs:group ref="skipna"/>
+            <xs:element name="polomer" type="rozmerType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="useckaType">
+        <xs:sequence>
+            <xs:group ref="skipna"/>
+            <xs:element name="bod" type="bodType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:element name="obrazek">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="obdelnik" type="obdelnikType" minOccurs='0'/>
+                <xs:element name="kruh" type="kruhType" minOccurs='0'/>
+                <xs:element name="usecka" type="useckaType" minOccurs='0'/>
+            </xs:choice>
+        </xs:complexType>
+
+        <xs:unique name="unique-attr">
+            <xs:selector xpath="obdelnik|kruh|usecka"/>
+            <xs:field xpath="@id"/>
+        </xs:unique>
+    </xs:element>
+</xs:schema>

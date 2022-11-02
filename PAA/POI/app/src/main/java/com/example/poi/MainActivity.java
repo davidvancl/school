@@ -1,18 +1,21 @@
-package com.example.cv03;
+package com.example.poi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
+import android.view.View;
+import android.view.Window;
+
 public class MainActivity extends AppCompatActivity {
-    public ImageButton icon = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        this.icon = findViewById(R.id.imageButton);
-        this.icon.setOnTouchListener(new MyTouchListener(this));
+    public void openMap(View v) {
+        this.startActivity(new Intent(this, MapActivity.class));
     }
 }
