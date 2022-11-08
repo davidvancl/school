@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">POI</string>
+    <string name="appTitle">Night drive</string>
+    <string name="bar01">Fórum</string>
+    <string name="bar02">Moje akce</string>
+    <string name="bar03">Nastavení</string>
+    <string name="mapSettingText">Nastavení mapy</string>
+    <string name="showCompass">Zobrazovat kompas</string>
+    <string name="showMapScale">Zobrazovat škálu</string>
+    <string name="showLines">Zobrazení orientačních čar</string>
+    <string name="mapSettings">Nastavení mapy</string>
+    <string name="showMiniMap">Zobrazení mini mapy</string>
 </resources>

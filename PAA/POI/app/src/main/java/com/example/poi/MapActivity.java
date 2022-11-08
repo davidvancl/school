@@ -1,17 +1,19 @@
 package com.example.poi;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 
+import com.example.poi.ifaces.MapEvent;
 import com.example.poi.utils.MapWorker;
 import com.example.poi.utils.PermissionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.OverlayItem;
-import java.util.ArrayList;
+
+import java.util.Objects;
 
 public class MapActivity extends AppCompatActivity {
     private final String PER_PREF = "SERIALIZED_PERMISSIONS";
@@ -27,20 +29,59 @@ public class MapActivity extends AppCompatActivity {
 
 //        this.permissionManager = new PermissionManager(getSharedPreferences(this.PER_PREF, MODE_PRIVATE), this);
 
-        // Setup map
-        this.mapWorker = new MapWorker(this, getSharedPreferences(this.DEF_PREF, MODE_PRIVATE));
-        this.mapWorker.setupContext();
-        this.mapWorker.getMap();
+        // Load config map
+        Bundle extras = getIntent().getExtras();
+        JSONObject mapSettings;
+        if (extras != null) {
+            try {
+                mapSettings = new JSONObject(Objects.requireNonNull(extras.getString("configSettings")));
 
-        // Apply additional features
-        this.mapWorker.addZoom( 19, 50.773388, 15.075062);
-        this.mapWorker.addCompass();
-        this.mapWorker.addMyLocation();
-        if (false) {
-            this.mapWorker.addNavigationLines();
-        }
-        this.mapWorker.addScaleBar();
+                // Setup map
+                this.mapWorker = new MapWorker(this, getSharedPreferences(this.DEF_PREF, MODE_PRIVATE));
+                this.mapWorker.setupContext();
+                this.mapWorker.loadMap();
+                this.mapWorker.addMyLocation();
+                this.mapWorker.registerEventOverlay(this.loadMapEvents());
+                this.mapWorker.setZoom( 19, 50.773388, 15.075062);
+
+                // Apply additional features
+                if ((boolean) mapSettings.get("showCompas")) {
+                    this.mapWorker.addCompass();
+                }
+
+                if ((boolean) mapSettings.get("showMapLines")) {
+                    this.mapWorker.addNavigationLines();
+                }
+                if ((boolean) mapSettings.get("showScaleBar")) {
+                    this.mapWorker.addScaleBar();
+                }
+
+                if ((boolean) mapSettings.get("showMiniMap")) {
+                    this.mapWorker.addMiniMap();
+                }
+
+                this.mapWorker.renderTrack();
+
         this.mapWorker.addMarker(50.773388, 15.075062);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private MapEvent loadMapEvents() {
+        return new MapEvent() {
+            @Override
+            public void singleTapEvent(GeoPoint geoPoint) {
+                mapWorker.addMarker(geoPoint);
+            }
+
+            @Override
+            public void longPressEvent(GeoPoint geoPoint) {
+
+            }
+        };
     }
 
     public void onResume(){
