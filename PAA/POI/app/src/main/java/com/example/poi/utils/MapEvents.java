@@ -1,9 +1,6 @@
 package com.example.poi.utils;
 
-import android.widget.Toast;
-
 import com.example.poi.workers.MapWorker;
-
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
@@ -21,8 +18,8 @@ public final class MapEvents {
 
     }
 
-    public static void executeAddEvent(GeoPoint geoPoint, MapWorker mapWorker) {
-        mapWorker.addMarker(geoPoint);
+    public static void executeAddEvent(GeoPoint geoPoint, MapWorker mapWorker, DBEvent event) {
+        mapWorker.addMarker(geoPoint, event);
     }
 
     public static void executeDeleteEvent(Marker marker, MapWorker mapWorker) {

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(getMapIntent());
     }
 
-    private Intent getMapIntent() {
+    public Intent getMapIntent() {
         Intent mapIntent = new Intent(this, MapActivity.class);
         JSONObject config = this.configManager.getConfig();
         mapIntent.putExtra("configSettings", config != null ? config.toString() : "{}");

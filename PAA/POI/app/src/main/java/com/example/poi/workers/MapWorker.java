@@ -1,8 +1,12 @@
 package com.example.poi.workers;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,7 +15,6 @@ import com.example.poi.managers.DBManager;
 import com.example.poi.utils.DBEvent;
 import com.example.poi.utils.MapEvents;
 import com.example.poi.utils.NewEventDialog;
-
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
@@ -32,7 +35,6 @@ import org.osmdroid.views.overlay.simplefastpoint.LabelledGeoPoint;
 import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlay;
 import org.osmdroid.views.overlay.simplefastpoint.SimpleFastPointOverlayOptions;
 import org.osmdroid.views.overlay.simplefastpoint.SimplePointTheme;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +108,8 @@ public class MapWorker {
                         event.setLatitude(geoPoint.getLatitude());
                         event.setLongitude(geoPoint.getLongitude());
                         dbManager.addEvent(event);
-                        MapEvents.executeAddEvent(geoPoint, getMapWorker());
+
+                        MapEvents.executeAddEvent(geoPoint, getMapWorker(), event);
                     });
                 }
                 return false;
@@ -159,18 +162,18 @@ public class MapWorker {
         this.map.getOverlays().add(sfpo);
     }
 
-    public void addMarker(double x, double y) {
-        this.addMarker(new GeoPoint(x, y));
+    public void addMarker(DBEvent event, double x, double y) {
+        this.addMarker(new GeoPoint(x, y), event);
     }
 
-    public void addMarker(GeoPoint geoPoint) {
+    public void addMarker(GeoPoint geoPoint, DBEvent event) {
         Marker marker = new Marker(this.map);
         marker.setIcon(ContextCompat.getDrawable(this.activity, R.drawable.marker_meet));
         marker.setPosition(geoPoint);
 
-        marker.setTitle("Marker");
-        marker.setSnippet("Snippet marker");
-        marker.setSubDescription("SubDescription marker");
+        marker.setTitle(event.getTitle());
+        marker.setSnippet(event.getDateTimeFormatted());
+        marker.setSubDescription(event.getDescription());
 
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setOnMarkerClickListener((marker1, mapView) -> {
@@ -185,7 +188,7 @@ public class MapWorker {
             }
 
             if (eventMode.equals(MapEvents.DELETE_MODE)) {
-                MapEvents.executeDeleteEvent(marker1, getMapWorker());
+                askForConfirmation(event, marker1);
             }
 
             return true;
@@ -195,16 +198,25 @@ public class MapWorker {
         map.invalidate();
     }
 
+    private void askForConfirmation(DBEvent event, Marker marker1) {
+        new AlertDialog.Builder(activity)
+                .setTitle(event.getTitle())
+                .setMessage("Opravdu chceš smazat tuto událost?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    dbManager.removeEvent(event);
+                    MapEvents.executeDeleteEvent(marker1, getMapWorker());
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     public MapWorker getMapWorker() {
         return this;
     }
 
     public MapView getMap() {
         return this.map;
-    }
-
-    public AppCompatActivity getActivity() {
-        return this.activity;
     }
 
     public void setEventMode(String eventMode) {

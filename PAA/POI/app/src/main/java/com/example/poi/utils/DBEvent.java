@@ -1,15 +1,15 @@
 package com.example.poi.utils;
 
 import org.json.JSONObject;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DBEvent {
-    private int id;
-    private String title;
-    private String description;
+    private final int id;
+    private final String title;
+    private final String description;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
     private JSONObject track = new JSONObject();
     private double latitude;
     private double longitude;
@@ -18,10 +18,6 @@ public class DBEvent {
     public DBEvent(int id, String title, String description) {
         this.id = id;
         this.title = title;
-        this.description = description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -61,8 +57,8 @@ public class DBEvent {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getDateTimeFormatted() {
+        return this.dateTime.format(formatter);
     }
 
     public LocalDateTime getDateTime() {

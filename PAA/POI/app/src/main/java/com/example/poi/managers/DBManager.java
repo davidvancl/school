@@ -6,9 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.poi.utils.DBEvent;
-
 import org.json.JSONObject;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

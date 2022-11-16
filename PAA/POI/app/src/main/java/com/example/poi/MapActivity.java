@@ -3,12 +3,10 @@ package com.example.poi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import com.example.poi.managers.DBManager;
 import com.example.poi.utils.DBEvent;
 import com.example.poi.workers.MapWorker;
@@ -50,7 +48,14 @@ public class MapActivity extends AppCompatActivity {
             this.mapWorker.loadMap();
             this.mapWorker.addMyLocation();
             this.mapWorker.registerEventOverlay();
-            this.mapWorker.setZoom( 19, 50.773388, 15.075062);
+
+            String initZoomLatitude = getIntent().getExtras().getString("initZoomLatitude");
+            String initZoomLongitude = getIntent().getExtras().getString("initZoomLongitude");
+            if (initZoomLatitude != null && initZoomLongitude != null) {
+                this.mapWorker.setZoom( 20, Double.parseDouble(initZoomLatitude), Double.parseDouble(initZoomLongitude));
+            } else {
+                this.mapWorker.setZoom( 19, 50.773388, 15.075062);
+            }
 
             String initMode = getIntent().getExtras().getString("initMode");
             if (initMode != null) {
@@ -67,6 +72,7 @@ public class MapActivity extends AppCompatActivity {
             if (this.validateSettingByName(mapSettings,"showMapLines")) {
                 this.mapWorker.addNavigationLines();
             }
+
             if (this.validateSettingByName(mapSettings,"showScaleBar")) {
                 this.mapWorker.addScaleBar();
             }
@@ -78,7 +84,7 @@ public class MapActivity extends AppCompatActivity {
             this.mapWorker.renderTrack();
 
             for (DBEvent event : dbManager.getEventList()) {
-                this.mapWorker.addMarker(event.getLatitude(), event.getLongitude());
+                this.mapWorker.addMarker(event, event.getLatitude(), event.getLongitude());
             }
         }
     }

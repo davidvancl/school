@@ -178,8 +178,8 @@
         android:id="@+id/myPointsFrame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
-        tools:visibility="visible"
+        android:visibility="invisible"
+        tools:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -208,13 +208,13 @@
         android:id="@+id/generalFrame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="invisible"
+        android:visibility="visible"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        tools:visibility="invisible">
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
         <Button
             android:id="@+id/buttona"
