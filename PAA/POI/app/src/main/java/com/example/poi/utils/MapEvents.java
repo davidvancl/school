@@ -23,7 +23,6 @@ public final class MapEvents {
 
     public static void executeAddEvent(GeoPoint geoPoint, MapWorker mapWorker) {
         mapWorker.addMarker(geoPoint);
-        Toast.makeText(mapWorker.getActivity().getBaseContext(),geoPoint.getLatitude() + " - "+geoPoint.getLongitude(), Toast.LENGTH_LONG).show();
     }
 
     public static void executeDeleteEvent(Marker marker, MapWorker mapWorker) {

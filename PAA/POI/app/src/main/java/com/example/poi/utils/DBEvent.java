@@ -33,6 +33,10 @@ public class DBEvent {
         return this.track.toString();
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }

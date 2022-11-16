@@ -7,7 +7,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.poi.R;
+import com.example.poi.managers.DBManager;
+import com.example.poi.utils.DBEvent;
 import com.example.poi.utils.MapEvents;
+import com.example.poi.utils.NewEventDialog;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
@@ -38,10 +41,16 @@ public class MapWorker {
     private final AppCompatActivity activity;
     private final SharedPreferences sharedPreferences;
     private MapView map = null;
+    private final DBManager dbManager;
 
-    public MapWorker(AppCompatActivity activity, SharedPreferences sharedPreferences) {
+    public MapWorker(AppCompatActivity activity, SharedPreferences sharedPreferences, DBManager dbManager) {
         this.activity = activity;
         this.sharedPreferences = sharedPreferences;
+        this.dbManager = dbManager;
+    }
+
+    public void setMode(String mode) {
+        this.eventMode = mode;
     }
 
     public void setupContext() {
@@ -92,7 +101,13 @@ public class MapWorker {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint geoPoint) {
                 if (eventMode.equals(MapEvents.ADD_MODE)) {
-                    MapEvents.executeAddEvent(geoPoint, getMapWorker());
+                    NewEventDialog eventDialog = new NewEventDialog(activity);
+                    eventDialog.getEvent((DBEvent event) -> {
+                        event.setLatitude(geoPoint.getLatitude());
+                        event.setLongitude(geoPoint.getLongitude());
+                        dbManager.addEvent(event);
+                        MapEvents.executeAddEvent(geoPoint, getMapWorker());
+                    });
                 }
                 return false;
             }

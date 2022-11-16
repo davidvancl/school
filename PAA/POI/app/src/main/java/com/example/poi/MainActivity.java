@@ -17,6 +17,7 @@ import com.example.poi.managers.DBManager;
 import com.example.poi.utils.DBEvent;
 import com.example.poi.utils.EventViewAdapter;
 import com.example.poi.managers.LayoutManager;
+import com.example.poi.utils.MapEvents;
 import com.example.poi.utils.NewEventDialog;
 
 import org.json.JSONException;
@@ -57,21 +58,23 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException | JSONException e) {
             Toast.makeText(this, "Nepodařilo se uložit nastavení.", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void addEvent(View view) {
-        NewEventDialog eventDialog = new NewEventDialog(this);
-        eventDialog.getEvent((DBEvent event) -> {
-            dbManager.addEvent(event);
-        });
+        Intent intent = getMapIntent();
+        intent.putExtra("initMode", MapEvents.ADD_MODE);
+        this.startActivity(intent);
     }
 
     public void openMap(View v) {
+        this.startActivity(getMapIntent());
+    }
+
+    private Intent getMapIntent() {
         Intent mapIntent = new Intent(this, MapActivity.class);
         JSONObject config = this.configManager.getConfig();
         mapIntent.putExtra("configSettings", config != null ? config.toString() : "{}");
-        this.startActivity(mapIntent);
+        return mapIntent;
     }
     
     public DBManager getDBManager() {
