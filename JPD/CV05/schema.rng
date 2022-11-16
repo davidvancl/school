@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <rng:start combine="choice">
+        <rng:ref name="knihovna"/>
+    </rng:start>
+    <rng:define name="knihovna">
+        <rng:element name="knihovna">
+            <rng:oneOrMore>
+                <rng:element name="kniha">
+                    <rng:oneOrMore>
+                        <rng:element name="autor">
+                            <rng:optional>
+                                <rng:attribute name="hlavni">
+                                    <rng:data type="string">
+                                        <rng:param name="pattern">hlavni</rng:param>
+                                    </rng:data>
+                                </rng:attribute>
+                            </rng:optional>
+                            <rng:data type="string"/>
+                        </rng:element>
+                    </rng:oneOrMore>
+                    <rng:element name="nazev">
+                        <rng:data type="string"/>
+                    </rng:element>
+                    <rng:optional>
+                        <rng:element name="vydavatel">
+                            <rng:data type="string"/>
+                        </rng:element>
+                    </rng:optional>
+                    <rng:optional>
+                        <rng:element name="rok">
+                            <rng:data type="string"/>
+                        </rng:element>
+                    </rng:optional>
+                    <rng:optional>
+                        <rng:attribute name="isbn">
+                            <rng:data type="string">
+                                <rng:param name="minLength">10</rng:param>
+                                <rng:param name="maxLength">13</rng:param>
+                            </rng:data>
+                        </rng:attribute>
+                    </rng:optional>
+                </rng:element>
+            </rng:oneOrMore>
+        </rng:element>
+    </rng:define>
+</rng:grammar>

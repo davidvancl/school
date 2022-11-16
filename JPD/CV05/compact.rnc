@@ -1,0 +1,9 @@
+element knihovna {
+  element kniha {
+    element autor {  attribute hlavni { xsd:token { pattern = "hlavni" } }?, text }*,
+    element nazev { text },
+    element vydavatel { text }?,
+    element rok { text },
+    attribute isbn { xsd:string { minLength = "10" maxLength = "10" } }
+  }*
+}

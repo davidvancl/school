@@ -1,4 +1,4 @@
-package com.example.poi.utils;
+package com.example.poi.workers;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -6,10 +6,8 @@ import android.graphics.Paint;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.poi.R;
-import com.example.poi.ifaces.MapEvent;
-import com.example.poi.ifaces.OnMapMarkerClickListener;
+import com.example.poi.utils.MapEvents;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.config.Configuration;
@@ -36,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapWorker {
+    private String eventMode = MapEvents.VIEW_MODE;
     private final AppCompatActivity activity;
     private final SharedPreferences sharedPreferences;
     private MapView map = null;
@@ -88,12 +87,13 @@ public class MapWorker {
         this.map.getOverlays().add(mScaleBarOverlay);
     }
 
-    public void registerEventOverlay(MapEvent event) {
+    public void registerEventOverlay() {
         MapEventsReceiver mapEventsReceiver = new MapEventsReceiver() {
             @Override
-            public boolean singleTapConfirmedHelper(GeoPoint p) {
-                event.singleTapEvent(p);
-                Toast.makeText(activity.getBaseContext(),p.getLatitude() + " - "+p.getLongitude(), Toast.LENGTH_LONG).show();
+            public boolean singleTapConfirmedHelper(GeoPoint geoPoint) {
+                if (eventMode.equals(MapEvents.ADD_MODE)) {
+                    MapEvents.executeAddEvent(geoPoint, getMapWorker());
+                }
                 return false;
             }
 
@@ -146,40 +146,54 @@ public class MapWorker {
 
     public void addMarker(double x, double y) {
         this.addMarker(new GeoPoint(x, y));
-}
+    }
 
     public void addMarker(GeoPoint geoPoint) {
-        MapMarker marker = new MapMarker(this.map);
+        Marker marker = new Marker(this.map);
         marker.setIcon(ContextCompat.getDrawable(this.activity, R.drawable.marker_meet));
         marker.setPosition(geoPoint);
+
         marker.setTitle("Marker");
         marker.setSnippet("Snippet marker");
         marker.setSubDescription("SubDescription marker");
+
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        marker.setOnMapMarkerClickListener(new OnMapMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker, MapView mapView) {
-                if (marker.isInfoWindowShown()) {
-                    marker.closeInfoWindow();
+        marker.setOnMarkerClickListener((marker1, mapView) -> {
+            if (eventMode.equals(MapEvents.VIEW_MODE)) {
+                if (marker1.isInfoWindowShown()) {
+                    marker1.closeInfoWindow();
+                    MapEvents.executeViewEvent(marker1, mapView, false);
                 } else {
-                    marker.showInfoWindow();
+                    marker1.showInfoWindow();
+                    MapEvents.executeViewEvent(marker1, mapView, true);
                 }
-
-                return true;
             }
 
-            @Override
-            public boolean onLongPress(Marker marker, MapView mapView) {
-                // TODO: implement custom top bar with details
-                Toast.makeText(map.getContext()
-                        , "VOKURKA"
-                        , Toast.LENGTH_SHORT).show();
-                return false;
+            if (eventMode.equals(MapEvents.DELETE_MODE)) {
+                MapEvents.executeDeleteEvent(marker1, getMapWorker());
             }
+
+            return true;
         });
 
         this.map.getOverlays().add(marker);
         map.invalidate();
+    }
+
+    public MapWorker getMapWorker() {
+        return this;
+    }
+
+    public MapView getMap() {
+        return this.map;
+    }
+
+    public AppCompatActivity getActivity() {
+        return this.activity;
+    }
+
+    public void setEventMode(String eventMode) {
+        this.eventMode = eventMode;
     }
 
     public void doMapPause() {

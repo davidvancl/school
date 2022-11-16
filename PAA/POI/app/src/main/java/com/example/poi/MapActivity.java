@@ -1,17 +1,16 @@
 package com.example.poi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
-import com.example.poi.ifaces.MapEvent;
-import com.example.poi.utils.MapWorker;
-import com.example.poi.utils.PermissionManager;
-
+import com.example.poi.workers.MapWorker;
+import com.example.poi.managers.PermissionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osmdroid.util.GeoPoint;
 
 import java.util.Objects;
 
@@ -30,58 +29,50 @@ public class MapActivity extends AppCompatActivity {
 //        this.permissionManager = new PermissionManager(getSharedPreferences(this.PER_PREF, MODE_PRIVATE), this);
 
         // Load config map
-        Bundle extras = getIntent().getExtras();
-        JSONObject mapSettings;
-        if (extras != null) {
+        if (getIntent().getExtras() != null) {
+            JSONObject mapSettings = new JSONObject();
             try {
-                mapSettings = new JSONObject(Objects.requireNonNull(extras.getString("configSettings")));
-
-                // Setup map
-                this.mapWorker = new MapWorker(this, getSharedPreferences(this.DEF_PREF, MODE_PRIVATE));
-                this.mapWorker.setupContext();
-                this.mapWorker.loadMap();
-                this.mapWorker.addMyLocation();
-                this.mapWorker.registerEventOverlay(this.loadMapEvents());
-                this.mapWorker.setZoom( 19, 50.773388, 15.075062);
-
-                // Apply additional features
-                if ((boolean) mapSettings.get("showCompas")) {
-                    this.mapWorker.addCompass();
-                }
-
-                if ((boolean) mapSettings.get("showMapLines")) {
-                    this.mapWorker.addNavigationLines();
-                }
-                if ((boolean) mapSettings.get("showScaleBar")) {
-                    this.mapWorker.addScaleBar();
-                }
-
-                if ((boolean) mapSettings.get("showMiniMap")) {
-                    this.mapWorker.addMiniMap();
-                }
-
-                this.mapWorker.renderTrack();
-
-        this.mapWorker.addMarker(50.773388, 15.075062);
-
+                mapSettings = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("configSettings")));
             } catch (JSONException e) {
                 e.printStackTrace();
+                // TODO: log
             }
+
+            // Setup map
+            this.mapWorker = new MapWorker(this, getSharedPreferences(this.DEF_PREF, MODE_PRIVATE));
+            this.mapWorker.setupContext();
+            this.mapWorker.loadMap();
+            this.mapWorker.addMyLocation();
+            this.mapWorker.registerEventOverlay();
+            this.mapWorker.setZoom( 19, 50.773388, 15.075062);
+
+            // Apply additional features
+            if (this.validateSettingByName(mapSettings,"showCompas")) {
+                this.mapWorker.addCompass();
+            }
+
+            if (this.validateSettingByName(mapSettings,"showMapLines")) {
+                this.mapWorker.addNavigationLines();
+            }
+            if (this.validateSettingByName(mapSettings,"showScaleBar")) {
+                this.mapWorker.addScaleBar();
+            }
+
+            if (this.validateSettingByName(mapSettings,"showMiniMap")) {
+                this.mapWorker.addMiniMap();
+            }
+
+            this.mapWorker.renderTrack();
+            this.mapWorker.addMarker(50.773388, 15.075062);
         }
     }
 
-    private MapEvent loadMapEvents() {
-        return new MapEvent() {
-            @Override
-            public void singleTapEvent(GeoPoint geoPoint) {
-                mapWorker.addMarker(geoPoint);
-            }
-
-            @Override
-            public void longPressEvent(GeoPoint geoPoint) {
-
-            }
-        };
+    private boolean validateSettingByName(JSONObject settings, String value) {
+        try {
+            return (settings.has(value) && (boolean) settings.get(value));
+        } catch (JSONException e) {
+            return false;
+        }
     }
 
     public void onResume(){
@@ -92,6 +83,18 @@ public class MapActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         this.mapWorker.doMapPause();
+    }
+
+    public void openModPanel(View view) {
+        ConstraintLayout layout = findViewById(R.id.modPanel);
+        layout.setVisibility((layout.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    public void changeMode(View view) {
+        this.mapWorker.setEventMode(this.getResources().getResourceEntryName(view.getId()));
+        Button modeButton = findViewById(R.id.changeModeButton);
+        modeButton.setBackground(view.getBackground().getCurrent());
+        ((ConstraintLayout) findViewById(R.id.modPanel)).setVisibility(View.INVISIBLE);
     }
 
     public void doReturnClick(View view) {

@@ -1,4 +1,4 @@
-package com.example.poi.utils;
+package com.example.poi.managers;
 
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;

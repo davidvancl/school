@@ -1,4 +1,4 @@
-package com.example.poi.utils;
+package com.example.poi.managers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
