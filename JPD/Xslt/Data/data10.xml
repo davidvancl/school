@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auta>
+
+    <vyrobce id="skoda">
+        <nazev>Škoda</nazev>
+
+        <model>
+            <nazev>Scala</nazev>
+            <motor palivo="benzin">
+                <nazev>1.0 TSI</nazev>
+                <objem>1.0</objem>
+            </motor>
+            <motor palivo="benzin">
+                <nazev>1.5 TSI ACT</nazev>
+                <objem>1.5</objem>
+            </motor>
+            <motor palivo="diesel">
+                <nazev>1.6 TDI</nazev>
+                <objem>1.6</objem>
+            </motor>
+        </model>
+
+        <model>
+            <nazev>Octavia</nazev>
+            <motor palivo="benzin">
+                <nazev>1.0 TSI</nazev>
+                <objem>1.0</objem>
+            </motor>
+            <motor palivo="benzin">
+                <nazev>1.5 TSI ACT</nazev>
+                <objem>1.5</objem>
+            </motor>
+            <motor palivo="diesel">
+                <nazev>1.6 TDI</nazev>
+                <objem>1.6</objem>
+            </motor>
+        </model>
+    
+    </vyrobce>
+
+    <vyrobce id="ford">
+        <nazev>Ford</nazev>
+
+        <model>
+            <nazev>Fiesta</nazev>
+            <motor palivo="benzin">
+                <nazev>1.1/63 kW</nazev>
+                <objem>1.1</objem>
+            </motor>
+            <motor palivo="benzin">
+                <nazev>1.0 Ecoboost</nazev>
+                <objem>1.5</objem>
+            </motor>
+        </model>
+
+        <model>
+            <nazev>Focus</nazev>
+            <motor palivo="benzin">
+                <nazev>1.0 Ecoboost</nazev>
+                <objem>1.0</objem>
+            </motor>
+            <motor palivo="diesel">
+                <nazev>1.5 Ecoblue</nazev>
+                <objem>1.5</objem>
+            </motor>
+        </model>
+    
+    </vyrobce>
+
+    <vyrobce id="renault">
+        <nazev>Renault</nazev>
+
+        <model>
+            <nazev>Mégane</nazev>
+            <motor palivo="benzin">
+                <nazev>1.3TCE/85 kW</nazev>
+                <objem>1.3</objem>
+            </motor>
+            <motor palivo="diesel">
+                <nazev>1.5 Blue DCi</nazev>
+                <objem>1.5</objem>
+            </motor>
+        </model>
+
+        <model>
+            <nazev>Talisman</nazev>
+            <motor palivo="benzin">
+                <nazev>1.8 TCE</nazev>
+                <objem>1.8</objem>
+            </motor>
+            <motor palivo="diesel">
+                <nazev>2.0 Blue DCi</nazev>
+                <objem>2.0</objem>
+            </motor>
+        </model>
+    
+    </vyrobce>
+
+</auta>
