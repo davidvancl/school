@@ -1,0 +1,81 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Thu Dec 15 09:48:40 2022
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0001ca
+.config_8007_BUILD/DEFAULT/PRODUCTION/ZAKLAD.       code   0x008007    program   0x000002
+.config_8008_BUILD/DEFAULT/PRODUCTION/ZAKLAD.       code   0x008008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x0000e8      
+                            0x008007    0x008008      
+            234 out of 4103 program addresses used, program memory utilization is 5%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   BT2Int   0x00000d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                  Bin2Bcd   0x0000ad    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                 Byte2Seg   0x0000cc    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+               Config_IOs   0x000080    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Config_IOs.inc
+               Config_SPI   0x000093    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                     Decr   0x000068    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Finish   0x00005c    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                     Incr   0x000066    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                     Loop   0x000035    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                      Out   0x00006a    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+               SendByte7S   0x0000de    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                    Set_1   0x000071    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                    Set_4   0x000074    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   ShLoop   0x0000b8    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                    Start   0x000014    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write1   0x000077    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write2   0x00007a    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write3   0x00007d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+             _.org_1_0055   0x000055    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+             _.org_1_009D   0x00009d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00A2   0x0000a2    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00A7   0x0000a7    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00E3   0x0000e3    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   BT2Int   0x00000d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                    Start   0x000014    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                     Loop   0x000035    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+             _.org_1_0055   0x000055    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Finish   0x00005c    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                     Incr   0x000066    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                     Decr   0x000068    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                      Out   0x00006a    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                    Set_1   0x000071    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                    Set_4   0x000074    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write1   0x000077    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write2   0x00007a    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+                   Write3   0x00007d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Zaklad.asm
+               Config_IOs   0x000080    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Config_IOs.inc
+               Config_SPI   0x000093    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_009D   0x00009d    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00A2   0x0000a2    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00A7   0x0000a7    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                  Bin2Bcd   0x0000ad    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                   ShLoop   0x0000b8    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+                 Byte2Seg   0x0000cc    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+               SendByte7S   0x0000de    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+             _.org_1_00E3   0x0000e3    program     static C:\Users\David\Desktop\Projects\KAS\CV9.X\WORK.X\Display.inc
+
+

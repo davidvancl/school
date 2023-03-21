@@ -1,0 +1,22 @@
+1) Názvy knih, jejichž isbn začíná číslem 0
+xmllint -xpath knihovna/kniha["starts-with(@isbn, '0')"]/nazev/"text()" knihy.xml
+
+2) Názvy knih, vydaných před rokem 2005
+xmllint -xpath knihovna/kniha/rok["text() < 2005"]/../nazev/"text()" knihy.xml
+
+3) Názvy a autory knih, kde jméno aspoň jednoho z autorů začíná písmenem E
+xmllint -xpath knihovna/kniha/autor["contains(text(), 'E')"]/../*["self::nazev or self::autor"] knihy.xml
+
+4) Názvy a počty autorů knih u nichž je uveden vydavatel
+// Pokud pracuju pod XPath 1.0 -> vyžaduje cyklus
+xmllint -xpath "concat(knihovna/kniha[.//vydavatel][1]/nazev, ' - ', count(knihovna/kniha[.//vydavatel][1]/autor))" knihy.xml
+xmllint -xpath "concat(knihovna/kniha[.//vydavatel][2]/nazev, ' - ', count(knihovna/kniha[.//vydavatel][2]/autor))" knihy.xml
+xmllint -xpath "concat(knihovna/kniha[.//vydavatel][3]/nazev, ' - ', count(knihovna/kniha[.//vydavatel][3]/autor))" knihy.xml
+// Pokud pracuju pod XPath 2.0 + -> string-join
+
+5)
+S parent elementem
+xmllint -xpath knihovna/kniha["count(autor) > 1"] knihy.xml
+
+Bez parent elementu
+xmllint -xpath knihovna/kniha["count(autor) > 1"]/* knihy.xml

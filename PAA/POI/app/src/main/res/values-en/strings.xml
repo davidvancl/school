@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">POI</string>
+    <string name="appTitle">Night drive</string>
+    <string name="bar01">Forum</string>
+    <string name="bar02">My events</string>
+    <string name="bar03">Settings</string>
+    <string name="mapSettingText">Map settings</string>
+    <string name="showCompass">Show compas</string>
+    <string name="showMapScale">Show scalebar</string>
+    <string name="showLines">Show lines</string>
+    <string name="mapSettings">Map settings</string>
+    <string name="showMiniMap">Show minimap</string>
+</resources>
