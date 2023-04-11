@@ -1,0 +1,27 @@
+1) (define (prepona a b)
+  (sqrt (+ (* a a)
+           (* b b))))
+
+2) (define (pravouhly? a b c)
+  (= (* c c)
+     (+ (* a a)
+        (* b b))))
+
+3) (define (C->F c)
+  (+ (* c (/ 9 5)) 32))
+(C->F 20)
+
+4) (define (ab3 a b)
+  (expt (+ a b) 3))
+
+(define (ab3 a b)
+  (+ (* a a a) (* 3 (* a a) b) (* 3 a (* b b)) (* b b b)))
+
+5) (define (skorocele? a)
+  (or (= 0.001 (abs (- (round a) a))) (> 0.001 (- (round a) a))))
+(skorocele? 7.999999)
+
+6) (define (obdelnik a b)
+  (list (* a b)
+        (* 2 (+ a b))))
+(obdelnik 10 14)

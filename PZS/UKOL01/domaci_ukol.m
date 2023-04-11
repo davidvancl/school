@@ -5,7 +5,7 @@ clc;
 figure("Name", "Zarovnání signálu", 'NumberTitle','off'); % figura 1
 hold on; % zápis do jednoho okna
 
-[x,x_fs] = audioread('DSVowels.wav'); % Načtu signál do x a vzorkovací frekvenci x_fs
+[x,x_fs] = audioread('voice.wav'); % Načtu signál do x a vzorkovací frekvenci x_fs
 x_len = length(x); % délka signálu x
 
 t = (0:x_len - 1)/x_fs; % časová osa navzorkovaná
