@@ -1,0 +1,74 @@
+1)
+(define (druhy L)
+  (car (cdr L))
+  )
+
+(define (posledni L)
+  (car (reverse L))
+  )
+
+
+(define (bezkonce L)
+  (reverse (cdr (reverse L)))
+  )
+
+2) (define (bezdruheho L)
+  (cons (car L) (cdr (cdr L)))
+  )
+
+(define (beztretiho L)
+  (append (list (car L) (car (cdr L))) (cdr (cdr (cdr L))))
+  )
+
+3)
+(define (prohod L)
+  (list (car (cdr L)) (car L))
+  )
+
+(define (prohod L)
+  (cons (car (cdr L)) (list (car L)))
+  )
+
+(define (prohod L)
+  (append (cdr L) (list (car L)))
+  )
+
+4)
+(define (mod23? N)
+  (cond
+    [(and (= 0 (modulo N 2)) (= 0 (modulo N 3))) #true]
+    [else #false]
+    )
+  )
+
+(define (omezit mini x maxi)
+  (cond
+    [(< x mini) mini]
+    [(> x maxi) maxi]
+    [else x]
+    )
+  )
+
+(define (omezit2 mini x maxi)
+  (min maxi (max mini x))
+)
+
+5)
+(define (suda? L)
+  (cond
+    [(empty? L) #true]
+    [(even? (car L)) (suda? (cdr L))]
+    [else #false]
+   )
+)
+
+6)
+(define (secti L)
+  (cond
+    [(empty? L) 0]
+    [else (+ (car L) (secti (cdr L)))]
+   )
+)
+
+
+
