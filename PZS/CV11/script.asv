@@ -1,0 +1,35 @@
+clear all;
+close all;
+clc;
+
+% Notch filter, f0 = 32hz, fs=512hz
+f0=32;
+fs=512;
+frqs = [8 16 32 64];
+sig_len = 10;
+frm = 
+
+w0 = 2*pi*f0/fs;
+b = poly([exp(1i*w0), exp(-1i * w0)]);
+a = poly(0.99*[exp(1i*w0), exp(-1i * w0)]);
+
+k = sum(b)/sum(a);
+b = b/k;
+
+[H, w] = freqz(b,a, 1000);
+
+figure;plot(w/pi, abs(H));
+
+t = (0:fs * sig_len - 1) / fs;
+s = zeros(size(t));
+for lp = 1:length(frqs)
+    s = s + cos(2 * pi * frqs(lp));
+end
+s_sp = fft(s);
+sp_n = length(s_sp);
+k_ax = 0:sp_n - 1;
+w_ax = fs * k_ax/sp_n;
+figure;stem(w_ax,abs(s_sp));
+
+y = filter(b, a, s);
+y_sp = fft(y);
