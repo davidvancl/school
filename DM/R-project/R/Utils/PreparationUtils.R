@@ -1,6 +1,6 @@
 # Import knihoven
 library(stringr)
-library("haven")
+library(haven)
 library(ggplot2)
 library(dplyr)
 

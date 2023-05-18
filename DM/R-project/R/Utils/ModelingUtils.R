@@ -4,6 +4,7 @@ library(NbClust)
 library(plotly)
 library(C50)
 library(rpart)
+library(nnet)
 
 # Pomocné funkce pro hlavní program
 load_data <- function(file) {

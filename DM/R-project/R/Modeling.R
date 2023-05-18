@@ -11,14 +11,13 @@ export_data_path <- paste(base_path, "/Data/export_data_r.sav", sep = "")
 # 1. Načtu si vyexportovaná data
 data <- load_data(export_data_path)
 data <- data[, !(names(data) %in% c("ID"))]
-# View(data)
 
 # 2. Vytvořím rozdělení pomocí clusterů (Alternativa TwoStep) a přiřadím k datům
 res <- NbClust(data[, c("LOCAL", "International", "LONGDIST")],
     diss = NULL, distance = "euclidean", min.nc = 2, max.nc = 5,
     method = "ward.D2", index = "kl"
 )
-# data$TwoStep <- res$Best.partition
+data$TwoStep <- res$Best.partition
 # View(data)
 
 # 3. Vykreslím 3D graf pro zařazení do clusterů
@@ -59,7 +58,7 @@ train_y <- train_data$CHURNED
 
 # 6.2 Provedu natrénování modelu
 model_c5 <- C5.0(train_x, train_y)
-# print(model)
+print(model_c5)
 
 # 6.1 Připravým testovací data a cílový sloupec
 test_x <- test_data[, !(names(test_data) %in% c("CHURNED"))]
@@ -106,7 +105,9 @@ print_success_graph(accuracy_glm, "Úspěšnost predikce modelem Logistic")
 
 # 9 Predikce algoritmem Neuronová síť
 # 9.1 Provedu natrénování modelu
-model_neural <- nnet(CHURNED ~ ., data = train_data, size = 5, linout = TRUE, decay = 0.1)
+model_neural <- nnet(CHURNED ~ .,
+    data = train_data, size = 5, linout = TRUE, decay = 0.1
+)
 
 # 9.2 Predikce na testovacích datech a převod výsledků do 0 a 1
 predicted_neural <- predict(model_neural, newdata = test_x)
