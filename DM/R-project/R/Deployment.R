@@ -9,38 +9,42 @@ source(paste(base_path, "/R/Utils/PreparationUtils.R", sep = ""))
 data_path <- paste(base_path, "/Data/deploydata.txt", sep = "")
 
 #-------------- Začátek hlavního programu------------------------
-# 1. Načtu DATA a odstraním ID a No.phone.lines
+# 1. Načtu DATA
 data <- load_text_data(data_path)
+
+# 1.1 Odstraním ID a No.phone.lines
 user_ids <- as.data.frame(data$ID)
 data <- data[, !(names(data) %in% c("ID", "No.phone.lines"))]
-# View(data)
+View(data)
 
-# 2. Vytvořím rozdělení pomocí clusterů (Alternativa TwoStep) a přiřadím k datům
+# 2. Vytvořím rozdělení pomocí clusterů (Alternativa TwoStep)
 res <- NbClust(data[, c("LOCAL", "International", "LONGDIST")],
     diss = NULL, distance = "euclidean", min.nc = 2, max.nc = 5,
     method = "ward.D2", index = "kl"
 )
+# 2.1 Přiřadím výsledek k datům
 data$TwoStep <- res$Best.partition
-# View(data)
+View(data)
 
-# 3. Provedu predikci na základě modelu C5.0 a uložím do tabulky
+# 3. Provedu predikci na základě modelu C5.0
 predictions <- predict(model_c5, data)
+# 3.1 Přiřadím k datům původní tabulky
 data$C_CHURNED <- predictions
-# View(data)
+View(data)
 
 # 4. Do tabulky uložím i procentuální hodnotu
 percentages <- predict(model_c5, data, type = "prob")
 percentages <- as.data.frame(percentages)
-# Dva sloupce pro Vol i pro Current a zajímá mě ta predikovaná, max
+# 4.1 Dva sloupce pro Vol i pro Current a zajímá mě ta predikovaná, max
 data$CC_CHURNED <- pmax(percentages$Current, percentages$Vol)
-# View(data)
+View(data)
 
 # 5. Do tabulky přidám vypočítanou hodnotu skóre
 data$Skore <- ifelse(data$C_CHURNED == "Vol",
     0.5 + data$CC_CHURNED / 2,
     0.5 - data$CC_CHURNED / 2
 )
-# View(data)
+View(data)
 
 # 6. Vykreslím graf pro rozložení skóre
 graph_skore <- ggplot(data, aes(

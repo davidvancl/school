@@ -24,7 +24,7 @@ raw_data <- raw_data[
 ]
 View(raw_data)
 
-# 4. Provedu SELECT na CHURN a vyberu pouze platící zákazníky
+# 4. Provedu SELECT na CHURN a odeberu neplatící zákazníky
 raw_data <- raw_data[trimws(raw_data$CHURNED) != "InVol", ]
 View(raw_data)
 

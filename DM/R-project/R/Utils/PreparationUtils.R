@@ -4,7 +4,8 @@ library(haven)
 library(ggplot2)
 library(dplyr)
 
-# Pomocné funkce pro hlavní program
+# ===========Pomocné funkce pro hlavní program===========
+# Načtení textového souboru jako tabulka
 load_text_data <- function(file) {
     data <- read.table(
         file,
@@ -16,7 +17,7 @@ load_text_data <- function(file) {
     return(data)
 }
 
-# Pomocné funkce pro hlavní program
+# Připravení dat na faktory pro následné zpracování
 prepare_data_export <- function(frame) {
     export_frame <- frame
     export_frame$PAY_MTHD <- as.character(export_frame$PAY_MTHD)
