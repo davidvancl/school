@@ -6,6 +6,10 @@ source(paste(base_path, "/R/Utils/ModelingUtils.R", sep = ""))
 
 # Definice cest pro soubory
 export_data_path <- paste(base_path, "/Data/export_data_r.sav", sep = "")
+export_c50_path <- paste(base_path, "/Data/c50_tree.png", sep = "")
+export_cr_path <- paste(base_path, "/Data/cr_tree.png", sep = "")
+export_linear_path <- paste(base_path, "/Data/linear_tree.png", sep = "")
+export_neural_path <- paste(base_path, "/Data/neural_tree.png", sep = "")
 
 #-------------- Začátek hlavního programu------------------------
 # 1. Načtu si vyexportovaná data
@@ -67,6 +71,7 @@ train_y <- train_data$CHURNED
 
 # 6.2 Provedu natrénování modelu
 model_c5 <- C5.0(train_x, train_y)
+save_model_tree(export_c50_path, model_c5)
 
 # 6.3 Připravým testovací data a oddělím cílový sloupec
 test_x <- test_data[, !(names(test_data) %in% c("CHURNED"))]
@@ -83,6 +88,7 @@ print_success_graph(accuracy_c5, "Úspěšnost predikce modelem C5.0")
 # 7 Predikce algoritmem C&R Tree
 # 7.1 Provedu natrénování modelu
 model_cr <- rpart(CHURNED ~ ., data = train_data, method = "class")
+save_model_tree(export_cr_path, model_cr)
 
 # 7.2 Predikce na testovacích datech
 predictions_cr <- predict(model_cr, test_x, type = "class")

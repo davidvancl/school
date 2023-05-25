@@ -5,6 +5,7 @@ library(plotly)
 library(C50)
 library(rpart)
 library(nnet)
+library(partykit)
 
 # ===========Pomocné funkce pro hlavní program===========
 # Načtení dat ze sav souboru
@@ -54,4 +55,11 @@ print_success_graph <- function(percentage, title) {
         col = rainbow(length(lbls)),
         main = title
     )
+}
+
+save_model_tree <- function(filename, model) {
+    converted_model <- as.party(model)
+    png(filename, width = 1920, height = 1080)
+    plot(converted_model)
+    dev.off()
 }
